@@ -1,0 +1,152 @@
+.clearfix:before,.clearfix:after{content:'\0020';display:block;overflow:hidden;visibility:hidden;width:0;height:0}.clearfix:after{clear:both}.clearfix{zoom:1}
+.clear { clear: both; display: block; overflow: hidden; visibility: hidden; width: 0; height: 0; }
+
+/* If a pop-up has no content, then it's width and height must be specified */
+body {
+    overflow: hidden;
+    font: normal 12px Helvetica, Arial, sans-serif;
+    text-shadow: 0 -1px 0 #fff;
+    background-color: rgb(4,5,5);
+    /* use this to keep all text from being selectable to maintain a more app-like experience
+    otherwise it's possible to highlight/select an entire pokki window  */
+    -webkit-user-select: none;
+}
+
+/* Used to contain the contents of a Pokki when testing in a web browser using PokkiBrowser.js */
+#wrapper {
+    margin: auto;
+    width: 500px;
+    height: 300px;
+    position: relative;
+    opacity: 0;
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, rgb(240,240,240)),
+        color-stop(1, rgb(251,250,255))
+    );
+}
+#wrapper.show { 
+    opacity: 1; 
+    -webkit-animation-name: fadein;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-duration: 300ms;
+}
+    #wrapper.show p {
+        width: 462px;
+        -webkit-animation-name: staggerdelay, stagger;
+        -webkit-animation-iteration-count: 1;
+    }
+
+/* Minimize Pokki button */
+a#minimize {
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 21px;
+    height: 12px;
+    cursor: pointer;
+    background: #555 url(../img/minimize.png) 0px -2px no-repeat;
+    border-bottom-left-radius: 3px;
+    -webkit-transition: background-color 0.3s linear;
+}
+a#minimize:hover {
+    background-color: #383d43;
+}
+a#minimize:active {
+    background-position: 0px -1px;
+}
+
+/* Splash Screen */
+#splash {
+    width: 100%; height: 100%;
+    background-color: rgb(4,5,5);
+    background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 300, from(#3e414d), to(#040405));
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0;
+    display: none;
+}
+#splash.animate {
+    opacity: 1;
+    display: block;
+	-webkit-animation-name: splash;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-duration: 2200ms;
+}
+#atom {
+    width: 100%; height: 100%;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0;
+    display: none;
+    background: transparent url(../img/atom_logo.png) no-repeat center center;
+}
+#atom.animate {
+    opacity: 1;
+    display: block;
+	-webkit-animation-name: atom;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-duration: 2300ms;
+}
+
+/* Main content */
+#content {
+    padding: 15px 5px 15px 15px;
+}
+#content p { 
+    margin-bottom: 15px; 
+    line-height: 18px;
+}
+
+h1 {
+    margin-bottom: 5px; 
+    font-size: 14px;
+}
+.show h1 {
+    -webkit-animation-name: staggerdelay, stagger;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-duration: 100ms, 300ms;
+    -webkit-animation-delay: 0ms, 100ms;
+}
+h2 {
+    margin-bottom: 3px;
+}
+.show h2 {
+    -webkit-animation-name: staggerdelay, stagger;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-duration: 200ms, 300ms;
+    -webkit-animation-delay: 0ms, 200ms;
+}
+
+/* Scrollable area */
+.scrollable {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 253px;
+}
+/* Offset content inside of scrollable area so that it doesn't hug the scrollbar */
+.scrollable .content { 
+    margin-right: 10px; 
+}
+    
+/* Custom CSS scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 5px;
+	background: none;
+}
+::-webkit-scrollbar-track:vertical { 
+    background: none; 
+}
+::-webkit-scrollbar-thumb {
+    width: 8px; height: 20px;
+    background: #555;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-button: { 
+    display: none; 
+}

@@ -1,0 +1,454 @@
+.clearfix:before,.clearfix:after{content:'\0020';display:block;overflow:hidden;visibility:hidden;width:0;height:0}.clearfix:after{clear:both}.clearfix{zoom:1}
+.clear { clear: both; display: block; overflow: hidden; visibility: hidden; width: 0; height: 0; }
+
+/* If a pop-up has no content, then it's width and height must be specified */
+body {
+    overflow: hidden;
+    font: normal 12px Helvetica, Arial, sans-serif;
+    text-shadow: 0 1px 0 #fff;
+    background-color: rgb(4,5,5);
+    /* use this to keep all text from being selectable to maintain a more app-like experience
+    otherwise it's possible to highlight/select an entire pokki window  */
+    -webkit-user-select: none;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+a:active { position: relative; top: 1px; }
+a.ext { 
+    display: inline-block; 
+    position: relative; 
+}
+    a.ext span { 
+        position: absolute; 
+        top: 4px; right: -17px; 
+        display: block;
+        width: 13px; height: 9px;
+        background: transparent url(../img/external_link.png) no-repeat center top;
+        opacity: 0;
+        -webkit-transition: opacity 250ms ease-in;
+    }
+    a.ext:hover span {
+        opacity: 1;
+    }
+
+/* Used to contain the contents of a Pokki when testing in a web browser using PokkiBrowser.js */
+#wrapper {
+    margin: auto;
+    width: 500px;
+    height: 385px;
+    position: relative;
+    opacity: 0;
+    background: #fff;
+}
+#wrapper.show { 
+    opacity: 1; 
+    -webkit-animation-name: fadein;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-duration: 300ms;
+}
+    #wrapper.show .item {
+        -webkit-animation-name: staggerdelay, stagger;
+        -webkit-animation-iteration-count: 1;
+    }
+
+/* Minimize Pokki button */
+a#minimize {
+    display: block;
+    position: absolute;
+    z-index: 5;
+    top: 0px;
+    right: 0px;
+    width: 21px;
+    height: 12px;
+    cursor: pointer;
+    background: #383d43 url(../img/minimize.png) 0px -2px no-repeat;
+    border-bottom-left-radius: 3px;
+    -webkit-transition: background-color 0.3s linear;
+    -webkit-box-shadow: rgba(0,0,0,0.9) 0 -1px 0px inset;
+}
+a#minimize:hover {
+    background-color: #333;
+}
+a#minimize:active {
+    background-position: 0px -1px;
+}
+
+/* Splash Screen */
+#splash {
+    width: 100%; height: 100%;
+    background-color: rgb(4,5,5);
+    background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 300, from(#3e414d), to(#040405));
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0;
+    display: none;
+}
+#splash.animate {
+    opacity: 1;
+    display: block;
+	-webkit-animation-name: splash;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-duration: 2200ms;
+}
+#atom {
+    width: 100%; height: 100%;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0;
+    display: none;
+    background: transparent url(../img/atom_logo.png) no-repeat center center;
+}
+#atom.animate {
+    opacity: 1;
+    display: block;
+	-webkit-animation-name: atom;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-duration: 2300ms;
+}
+
+/* Main content */
+#content {
+    padding: 5px 5px 15px 15px;
+    position: relative;
+    overflow: hidden;
+    -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 0 inset;
+}
+
+h1 {
+    padding: 5px 15px 5px 30px;
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, rgb(0,0,0)),
+        color-stop(1, rgb(34,34,34))
+    );
+    text-shadow: 0 1px 0 #000;
+    font-size: 14px;
+    cursor: default;
+    position: relative;
+}
+h1 a { color: #fff; }
+h1 span.icon { 
+    background: transparent url(http://media.smashingmagazine.com/themes/smashing/images/favicon.ico) no-repeat 0 0; 
+    display: block; 
+    width: 16px; 
+    height: 16px; 
+    position: absolute; top: 5px; left: 10px; 
+    border-radius: 2px;
+}
+.show h1 {
+    -webkit-animation-name: fadein;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-duration: 250ms;
+}
+
+/* List of Feed items */
+#feed { margin-top: 8px; }
+    #feed .item {
+        margin: 2px 8px 5px 3px; padding: 5px;
+        width: 90px; height: 90px;
+        float: left;
+        display: block;
+        background: rgb(230,230,230);
+        border: 2px solid #fff;
+        position: relative;
+        border-radius: 5px;
+        cursor: move;
+        text-decoration: none;
+        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        -webkit-transition-property: background,top,opacity;
+        -webkit-transition-duration: 200ms;
+        -webkit-transition-timing-function: ease-in-out;
+    }
+    #feed .item:hover {
+        background: #bde3f8;
+        text-shadow: 0 1px 0 #cce5ff;
+        top: -8px;
+    }
+    #feed .item:active {
+        top: -7px;
+    }
+    #feed .item .title {
+        line-height: 14px;
+        max-height: 56px;
+        overflow: hidden;
+        display: block;
+    }
+    #feed .item .date {
+        padding: 1px 3px;
+        display: block;
+        position: absolute;
+        bottom: 8px;
+        background: #d83f2f;
+        left: 0;
+        right: 10px;
+        font-size: 9px;
+        text-shadow: none;
+        color: white;
+        font-weight: bold;
+        border-bottom: 1px solid #fff;
+        font-family: Verdana;
+        opacity: 0.7;
+        -webkit-transition-property: opacity;
+        -webkit-transition-duration: 200ms;
+        -webkit-transition-timing-function: ease-in-out;
+    }
+    #feed .item:hover .date { 
+        border-color: #cce5ff; 
+        opacity: 1; 
+    }
+    #feed .item .snippet { display: none; }
+    #feed .item.dragging { opacity: 0.5; }
+
+#loading {
+    position: absolute; 
+    top: 0; left: 0;
+    width: 395px; height: 341px;
+    background: transparent url(../img/loader-large.gif) no-repeat center center;
+}
+
+#target {
+    background: #d7d7d7;
+    position: absolute;
+    top: 0px; right: 0px;
+    width: 113px; height: 359px;
+    opacity: 0;
+    overflow: hidden;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 3px inset;
+    -webkit-transition-property: background;
+    -webkit-transition-duration: 200ms;
+    -webkit-transition-timing-function: ease-in-out;
+}
+    #target .instapaper {
+        background: transparent url(../img/instapaper.png) no-repeat center top;
+        width: 200px; height: 200px;
+        display: block;
+        opacity: 0.5;
+        position: absolute;
+        bottom: -48px; left: 0;
+        -webkit-transform: rotate(-12deg) scale(0.8);
+        -webkit-transition-property: bottom, opacity, -webkit-transform;
+        -webkit-transition-duration: 200ms;
+        -webkit-transition-timing-function: ease-out;
+    }
+    #target .info { 
+        margin: 105px 15px 0;
+        padding: 15px 0;
+        text-align: center; 
+        font-weight: bold;
+        font-size: 12px;
+        color: #909090;
+        opacity: 0;
+        cursor: default;
+        -webkit-transition-property: text-shadow, color;
+        -webkit-transition-duration: 200ms;
+        -webkit-transition-timing-function: ease-in-out;
+    }
+#target.dragging { background: #dfdfdf; }
+    #target.dragging .instapaper { -webkit-transform: rotate(-6deg) scale(0.8); }
+#target.over { background: #878787; }
+    #target.over .info { color: #575757; text-shadow: 0 1px 0 #a7a7a7; }
+    #target.over .instapaper { opacity: 0.3; }
+#target.saved { background: #bde3f8; }
+    #target.saved .info { color: #89afc4; text-shadow: 0 1px 0 #eff6f9; }
+    #target.saved .instapaper { 
+        bottom: -38px; 
+        opacity: 0.7; 
+        -webkit-transition-duration: 400ms, 200ms, 200ms;
+    }
+.show #target {
+    opacity: 1;
+    -webkit-animation-name: staggerdelay, target;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-duration: 100ms, 300ms;
+    -webkit-animation-delay: 0ms, 100ms;
+}
+.show #target .info {
+    opacity: 1;
+    -webkit-animation-name: staggerdelay, fadein;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-duration: 350ms, 200ms;
+    -webkit-animation-delay: 0ms, 350ms;
+}
+
+
+#login {
+    position: absolute; z-index: 6;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255,255,255,0.9);
+    display: none;
+    overflow: hidden;
+}
+    #login form {
+        margin: -230px auto 0;
+        width: 280px;
+        border: 5px solid rgba(224,224,224,0.6);
+        border-radius: 5px;
+        position: relative;
+        -webkit-box-shadow: rgba(0,0,0,0.4) 0 1px 2px;
+    }
+    #login form .content {
+        padding: 10px 20px;
+        width: 240px;
+        background: #f7f7f7;
+        border-radius: 5px;
+    }
+    #login form h2 {
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 13px;
+        cursor: pointer;
+    }
+    #login form input {
+        margin: 0 0 10px 0; padding: 4px 5px;
+        border: 1px solid #d7d7d7;
+        background: #fefefe;
+        border-radius: 2px;
+        width: 230px;
+        font-size: 12px;
+    }
+    #login form input:focus { outline: none; }
+    
+    #login_close {
+        padding: 1px;
+        position: absolute;
+        top: -10px; right: -10px;
+        border-radius: 10px;
+        background: #333;
+        display: block;
+        text-align: center;
+        width: 17px; height: 17px;
+        line-height: 16px;
+        color: #fff;
+        text-shadow: 0 -1px 0 #000;
+        -webkit-box-shadow: rgba(255,255,255,1) 0px -1px 0, rgba(0,0,0,1) 0px 1px 0 inset;
+    }
+    #login_close:active {
+        top: -9px;
+        -webkit-box-shadow: rgba(255,255,255,1) 0px 1px 0, rgba(0,0,0,1) 0px 1px 0 inset;
+    }
+    
+    #login_button { 
+        margin-bottom: 5px;
+        padding: 4px 5px; 
+        display: block; 
+        text-align: center; 
+        background: #D83F2F; 
+        border-radius: 2px;
+        color: #fff;
+        text-shadow: 0 -1px 0 #aa2417;
+        height: 14px;
+        opacity: 0.9;
+        -webkit-box-shadow: rgba(255,255,255,1) 0px -1px 0;
+        -webkit-transition-property: opacity;
+        -webkit-transition-duration: 200ms;
+        -webkit-transition-timing-function: ease-out;
+    }
+    #login_button:hover {
+        opacity: 1;
+    }
+    #login_button:active {
+        -webkit-box-shadow: rgba(255,255,255,1) 0px 1px 0, rgba(0,0,0,0.3) 0px 1px 0 inset;
+    }
+    #login_button.loading, #login_button.loading:hover, #login_button.loading:active {
+        opacity: 0.5;
+    }
+#login.show {
+    display: block;
+    -webkit-animation-name: fadein;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-duration: 250ms;
+}
+    #login.show form {
+        margin-top: 50px;
+        -webkit-animation-name: staggerdelay, login;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-duration: 250ms, 300ms;
+        -webkit-animation-delay: 0, 250ms;
+    }
+    #login.show form.shake {
+        -webkit-animation-name: login_shake;
+        -webkit-animation-iteration-count: 2;
+        -webkit-animation-duration: 200ms;
+    }
+    #login.show form.hold {
+        -webkit-animation: normal;
+        margin-top: 50px;
+    }
+#login.hide {
+    display: block;
+    opacity: 0;
+    -webkit-animation-name: fadeoutdelay, fadeout;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-duration: 250ms, 250ms;
+    -webkit-animation-delay: 0, 250ms;
+}
+    #login.hide form {
+        margin: -230px auto 0;
+        -webkit-animation-name: loginhide;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-duration: 250ms;
+        -webkit-animation-delay: 0;
+    }
+
+/* Feedback */
+.feedback {
+    padding: 5px 8px;
+    position: absolute; 
+    top: 160px; right: -230px;
+    z-index: 6;
+    opacity: 0;
+    text-align: right;
+    background: #fbfcae;
+    text-shadow: none;
+    line-height: 16px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    -webkit-box-shadow: rgba(0,0,0,0.4) 0 1px 1px;
+    -webkit-transition-property: opacity;
+    -webkit-transition-duration: 200ms;
+    -webkit-transition-timing-function: ease-out;
+}
+    .feedback.show {
+        right: 0;
+        opacity: 1;
+        -webkit-animation-name: showfeedback;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-duration: 250ms;
+        -webkit-animation-delay: 0;
+    }
+    
+/* Scrollable area */
+.scrollable {
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 365px; height: 341px;
+    float: left;
+}
+    /* Offset content inside of scrollable area so that it doesn't hug the scrollbar */
+    .scrollable .content { 
+        margin-right: 10px; 
+    }
+    
+/* Custom CSS scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 5px;
+	background: none;
+}
+::-webkit-scrollbar-track:vertical { 
+    background: none; 
+}
+::-webkit-scrollbar-thumb {
+    width: 8px; height: 20px;
+    background: #555;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-button: { 
+    display: none; 
+}

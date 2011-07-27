@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+	<head>
+	    <!-- Loading PokkiBrowser to do testing in a normal chrome web browser -->
+        <script type="text/javascript" src="js/lib/PokkiBrowser.js"></script>
+        <!-- Loading utility class for localStorage interaction -->
+        <script type="text/javascript" src="js/lib/LocalStore.js"></script>
+        <!-- Loading application files -->
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            // Initialize Google Feeds API
+            _FEED_API_LOADED = false;
+            google.load("feeds", "1");
+            google.setOnLoadCallback(function() {
+                if(MoleculeBackground)
+                    MoleculeBackground.start_poll();
+            });
+        </script>
+        <script type="text/javascript" src="js/constants.js"></script>
+        <script type="text/javascript" src="js/lib/OAuth/oauth.js"></script>
+        <script type="text/javascript" src="js/lib/OAuth/sha1.js"></script>
+        <script type="text/javascript" src="js/lib/OAuthManager-nolib.js"></script>
+        <script type="text/javascript" src="js/lib/xAuthManager-nolib.js"></script>
+		<!-- Loading background logic -->
+		<script src="js/background.js"></script>
+	</head>
+	<body>
+	</body>
+</html>
