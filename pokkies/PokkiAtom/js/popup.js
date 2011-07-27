@@ -32,7 +32,6 @@ function showing() {
 }
 pokki.addEventListener('popup_showing', showing);
 
-
 // Add listener for when the popup window is shown
 function shown() {
     console.log('Popup window is visible.');
@@ -41,7 +40,6 @@ function shown() {
     }
 }
 pokki.addEventListener('popup_shown', shown);
-
 
 // Add listener for when the pop-up window is hidden
 function hidden() {
