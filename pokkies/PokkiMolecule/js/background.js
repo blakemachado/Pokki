@@ -58,12 +58,36 @@ var BackgroundApp = function() {
         poll_feed(); // initial call
         setInterval(poll_feed, 1000 * 60 * 60 * 12) // every 12 hours
     };
+    
+    this.logout = function() {
+        auth.logout();
+        logged_out();
+    };
 };
 
 MoleculeBackground = new BackgroundApp();
 
-// Context menu states
-// Also serve as RPC calls from popup.html to update the context menus                
+// Add listener for context_menu
+pokki.addEventListener('context_menu', onContextMenu);
+
+function onContextMenu(key) {
+    console.log('Context menu item was clicked');
+    
+    switch(key) {
+        case 'insta':
+            // tell pokki to open it in a normal browser
+            pokki.openURLInDefaultBrowser('http://www.instapaper.com/u');
+            // close the popup so user can interact with browser
+            pokki.closePopup();
+            break;
+        case 'logout':
+            if(MoleculeBackground) MoleculeBackground.logout();
+            pokki.rpc('if(Molecule) Molecule.onLogout();');
+            break;
+    }
+}
+
+// Context menu states             
 function logged_in() {
     pokki.resetContextMenu();
     pokki.addContextMenuItem('Go to Instapaper', 'insta');

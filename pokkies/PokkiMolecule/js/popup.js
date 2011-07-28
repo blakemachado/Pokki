@@ -54,25 +54,6 @@ function onHide() {
     if(Molecule) Molecule.onPopupHidden();
 }
 
-// Add listener for context_menu
-pokki.addEventListener('context_menu', onContextMenu);
-
-function onContextMenu(key) {
-    console.log('Context menu item was clicked');
-    
-    switch(key) {
-        case 'insta':
-            // tell pokki to open it in a normal browser
-            pokki.openURLInDefaultBrowser('http://www.instapaper.com/u');
-            // close the popup so user can interact with browser
-            pokki.closePopup();
-            break;
-        case 'logout':
-            if(Molecule) Molecule.onLogout();
-            break;
-    }
-}
-
 // RPC calls
 function update_feed() {
     if(Molecule && !pokki.isPopupShown()) Molecule.reload_feed();

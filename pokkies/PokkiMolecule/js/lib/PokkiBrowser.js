@@ -4,7 +4,8 @@
  *
  * Usage: Include in popup.html page and that's it!
  * (It's JavaScript framework independent)
- * Last Updated: 7/15/2011
+ * Last Updated: 7/19/2011
+ * - Fixed the context menu event
  *
  * Copyright ©2011 SweetLabs, Inc.
  * @author Fontaine Shu <fontaine@sweetlabs.com>
@@ -206,14 +207,17 @@ catch(e) {
 			if(this.context_menu.innerHTML != '') item.style.borderTop = '1px solid #d7d7d7';
 			item.innerHTML = text;
 			item.addEventListener('click', function() {
-				if(pokki.is_popup) {
-					if(pokki.events && pokki.events.context_menu) {
-						pokki.events.context_menu(id);
-					}
+                if(pokki.events && pokki.events.context_menu) {
+                    for(var ps = 0; ps < pokki.events.context_menu.length; ps++) {
+                        pokki.events.context_menu[ps](id);
+				    }
 				}
-				else {
+				
+				if(!pokki.is_popup) {
 					if(parent.pokki.events && parent.pokki.events.context_menu) {
-						parent.pokki.events.context_menu(id);
+						for(var ps = 0; ps < parent.pokki.events.context_menu.length; ps++) {
+                            parent.pokki.events.context_menu[ps](id);
+    				    }
 					}
 				}
 			});
@@ -259,7 +263,7 @@ catch(e) {
 				}
 				if(pokki.events.popup_shown) {
 					setTimeout(function() {
-    				    for(var ps = 0; ps < pokki.events.popup_showing.length; ps++) {
+    				    for(var ps = 0; ps < pokki.events.popup_shown.length; ps++) {
                             pokki.events.popup_shown[ps]();
     				    }
 				    }, 1000);

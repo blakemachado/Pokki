@@ -308,7 +308,5 @@ var App = function() {
      */
     this.onLogout = function() {
         api.logout();
-        // tell background page
-        pokki.rpc('logged_out();');
     };
 };
