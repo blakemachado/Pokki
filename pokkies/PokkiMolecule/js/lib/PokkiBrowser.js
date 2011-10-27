@@ -1,15 +1,17 @@
 /**
- * Simply mimics some of the pokki functions not found in the browser to keep
- * Javascript errors about pokki being undefined from happening.
+ * PokkiBrowser - Utility for mimicking Pokki SDK functions for browser-based Pokki development
+ * For all details and documentation:
+ * https://github.com/blakemachado/Pokki
  *
- * Usage: Include in popup.html page and that's it!
- * (It's JavaScript framework independent)
- * Last Updated: 7/19/2011
- * - Fixed the context menu event
+ * @version     1.2, last updated: 10/26/2011
+ * @license     MIT License
+ * @author      Fontaine Shu <fontaine@sweetlabs.com>, SweetLabs, Inc.
+ * @copyright   (c) 2011, Authors
  *
- * Copyright ©2011 SweetLabs, Inc.
- * @author Fontaine Shu <fontaine@sweetlabs.com>
+ * Usage: Include in popup.html and background.html and that's it!
+ * It's JavaScript framework independent
  */
+ 
 try {
 	// simply a test to see if pokki exists
 	if(pokki.isPopupShown()) {
@@ -101,6 +103,20 @@ catch(e) {
 			}
 		},
 		/**
+		 * RPC helper that takes an arbitrary number of arguments, the first of which is the function name as a string.
+		 * Subsequent arguments are then fed into that function call
+		 */
+		rpcArgs: function () { 
+            var args = Array.prototype.slice.call(arguments); 
+            var func = args.shift(); 
+            var arg_strings = []; 
+            for(var i = 0; i < args.length; i++) { 
+                arg_strings.push(JSON.stringify(args[i])); 
+            } 
+            var rpc_str = func + '(' + arg_strings.join(',') + ')'; 
+            return pokki.rpc(rpc_str); 
+        },
+		/**
 		 * Launches a popup window as the websheet, does not support
 		 * error_callback
 		 */
@@ -117,6 +133,7 @@ catch(e) {
 						websheet_url = w.location.href;
 						if(loading_callback) {
 							var ret = loading_callback(websheet_url);
+							
 							if(!ret) {
 								that.hideWebSheet();
 							}
@@ -233,6 +250,22 @@ catch(e) {
 				this.context_menu.innerHTML = '';
 				this.context_menu.style.opacity = 0;
 			}
+		},
+		
+		/**
+		 * NOOP
+		 */
+		setIdleDetect: function(on) { },
+		
+		/**
+		 * Returns inner size
+		 */
+		getWorkAreaSize: function() {
+            var size = {
+                width: window.innerWidth,
+                height: window.innerHeight
+            };
+            return size;		  
 		}
 	};
 	
@@ -251,6 +284,9 @@ catch(e) {
 		pokki.backgroundWin.name = 'background';
 		pokki.backgroundWin.width = 1;
 		pokki.backgroundWin.height = 1;
+		pokki.backgroundWin.style.background = 'transparent';
+		pokki.backgroundWin.style.visibility = 'hidden';
+		
 		
 		pokki.backgroundWin.addEventListener('load', function() {
 			// we do this to ensure that the background page loads before anything
@@ -274,6 +310,17 @@ catch(e) {
 		window.addEventListener('load', function() {
 			document.body.appendChild(pokki.backgroundWin);
 		}, false);
+		
+		// attach event listeners for resizing of workarea
+		window.addEventListener('resize', function() {
+            if(pokki.events) {
+                if(pokki.events.work_area_change) {
+				    for(var wac = 0; wac < pokki.events.work_area_change.length; wac++) {
+                        pokki.events.work_area_change[wac]();
+				    }
+                }
+            }		  
+		})
 	}
 	
 	window.addEventListener('load', function() {
