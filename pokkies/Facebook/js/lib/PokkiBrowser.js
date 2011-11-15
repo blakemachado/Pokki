@@ -3,7 +3,7 @@
  * For all details and documentation:
  * https://github.com/blakemachado/Pokki
  *
- * @version     1.0, last updated: 7/19/2011
+ * @version     1.3, last updated: 11/15/2011
  * @license     MIT License
  * @author      Fontaine Shu <fontaine@sweetlabs.com>, SweetLabs, Inc.
  * @copyright   (c) 2011, Authors
@@ -13,7 +13,7 @@
  */
  
 try {
-	// simply a test to see if pokki sdk exists
+	// simply a test to see if pokki exists
 	if(pokki.isPopupShown()) {
 		// noop
 	}
@@ -103,6 +103,20 @@ catch(e) {
 			}
 		},
 		/**
+		 * RPC helper that takes an arbitrary number of arguments, the first of which is the function name as a string.
+		 * Subsequent arguments are then fed into that function call
+		 */
+		rpcArgs: function () { 
+            var args = Array.prototype.slice.call(arguments); 
+            var func = args.shift(); 
+            var arg_strings = []; 
+            for(var i = 0; i < args.length; i++) { 
+                arg_strings.push(JSON.stringify(args[i])); 
+            } 
+            var rpc_str = func + '(' + arg_strings.join(',') + ')'; 
+            return pokki.rpc(rpc_str); 
+        },
+		/**
 		 * Launches a popup window as the websheet, does not support
 		 * error_callback
 		 */
@@ -119,6 +133,7 @@ catch(e) {
 						websheet_url = w.location.href;
 						if(loading_callback) {
 							var ret = loading_callback(websheet_url);
+							
 							if(!ret) {
 								that.hideWebSheet();
 							}
@@ -157,8 +172,9 @@ catch(e) {
 		 * Reads the manifest.json data and returns the value for the key
 		 */
 		getScrambled: function(key) {
-			if(pokki.manifestData) {
-				var sd = pokki.manifestData.scrambled_data;
+			var mf = pokki.getManifestData();
+			if(mf) {
+				var sd = mf.scrambled_data;
 				for(var i = 0; i < sd.length; i++) {
 					if(sd[i].key == key)
 						return sd[i].value;
@@ -166,6 +182,18 @@ catch(e) {
 			}
 			return '';
 		},
+		/**
+		 * Gets the manifest data
+		 * Thanks Marc Nijdam <marc@imadjine.com>
+		 */
+        getManifestData: function() {
+            if (pokki.manifestData) return pokki.manifestData;
+            var myJSONP = new XMLHttpRequest();
+            myJSONP.open("GET",'manifest.json',false);
+            myJSONP.send();
+            pokki.manifestData = JSON.parse(myJSONP.responseText);
+            return pokki.manifestData;
+        },
 		/**
 		 * Returns the data back as-is
 		 */
@@ -235,6 +263,22 @@ catch(e) {
 				this.context_menu.innerHTML = '';
 				this.context_menu.style.opacity = 0;
 			}
+		},
+		
+		/**
+		 * NOOP
+		 */
+		setIdleDetect: function(on) { },
+		
+		/**
+		 * Returns inner size
+		 */
+		getWorkAreaSize: function() {
+            var size = {
+                width: window.innerWidth,
+                height: window.innerHeight
+            };
+            return size;		  
 		}
 	};
 	
@@ -253,6 +297,9 @@ catch(e) {
 		pokki.backgroundWin.name = 'background';
 		pokki.backgroundWin.width = 1;
 		pokki.backgroundWin.height = 1;
+		pokki.backgroundWin.style.background = 'transparent';
+		pokki.backgroundWin.style.visibility = 'hidden';
+		
 		
 		pokki.backgroundWin.addEventListener('load', function() {
 			// we do this to ensure that the background page loads before anything
@@ -273,15 +320,23 @@ catch(e) {
 			}
 		}, false);
 		
-		window.addEventListener('load', function() {
+		window.addEventListener('DOMContentLoaded', function() {
 			document.body.appendChild(pokki.backgroundWin);
 		}, false);
+		
+		// attach event listeners for resizing of workarea
+		window.addEventListener('resize', function() {
+            if(pokki.events) {
+                if(pokki.events.work_area_change) {
+				    for(var wac = 0; wac < pokki.events.work_area_change.length; wac++) {
+                        pokki.events.work_area_change[wac]();
+				    }
+                }
+            }		  
+		})
 	}
 	
-	window.addEventListener('load', function() {
-		var myJSONP = new XMLHttpRequest();
-		myJSONP.open("GET",'manifest.json',false);
-		myJSONP.send();
-		pokki.manifestData = JSON.parse(myJSONP.responseText);
+	window.addEventListener('DOMContentLoaded', function() {
+		pokki.getManifestData();
 	}, false);
 }

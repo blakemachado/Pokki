@@ -3,7 +3,7 @@
  * For all details and documentation:
  * https://github.com/blakemachado/Pokki
  *
- * @version     1.2, last updated: 10/26/2011
+ * @version     1.3, last updated: 11/15/2011
  * @license     MIT License
  * @author      Fontaine Shu <fontaine@sweetlabs.com>, SweetLabs, Inc.
  * @copyright   (c) 2011, Authors
@@ -172,8 +172,9 @@ catch(e) {
 		 * Reads the manifest.json data and returns the value for the key
 		 */
 		getScrambled: function(key) {
-			if(pokki.manifestData) {
-				var sd = pokki.manifestData.scrambled_data;
+			var mf = pokki.getManifestData();
+			if(mf) {
+				var sd = mf.scrambled_data;
 				for(var i = 0; i < sd.length; i++) {
 					if(sd[i].key == key)
 						return sd[i].value;
@@ -181,6 +182,18 @@ catch(e) {
 			}
 			return '';
 		},
+		/**
+		 * Gets the manifest data
+		 * Thanks Marc Nijdam <marc@imadjine.com>
+		 */
+        getManifestData: function() {
+            if (pokki.manifestData) return pokki.manifestData;
+            var myJSONP = new XMLHttpRequest();
+            myJSONP.open("GET",'manifest.json',false);
+            myJSONP.send();
+            pokki.manifestData = JSON.parse(myJSONP.responseText);
+            return pokki.manifestData;
+        },
 		/**
 		 * Returns the data back as-is
 		 */
@@ -307,7 +320,7 @@ catch(e) {
 			}
 		}, false);
 		
-		window.addEventListener('load', function() {
+		window.addEventListener('DOMContentLoaded', function() {
 			document.body.appendChild(pokki.backgroundWin);
 		}, false);
 		
@@ -323,10 +336,7 @@ catch(e) {
 		})
 	}
 	
-	window.addEventListener('load', function() {
-		var myJSONP = new XMLHttpRequest();
-		myJSONP.open("GET",'manifest.json',false);
-		myJSONP.send();
-		pokki.manifestData = JSON.parse(myJSONP.responseText);
+	window.addEventListener('DOMContentLoaded', function() {
+		pokki.getManifestData();
 	}, false);
 }
