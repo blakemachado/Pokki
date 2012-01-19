@@ -1,0 +1,32 @@
+{
+	"name": "Facebook GIT",
+	"version": "2.1.0",
+	"icon-19x19": "img/icon_19x19.png",
+	"icon-29x29": "img/icon_29x29.png",
+	"icon-42x42": "img/icon_42x42.png",
+	"description": "A Pokki for Facebook.",
+	"popup": "popup.html",
+	"background_page": "background.html",
+	"scrambled_data": [
+		{
+			"key": "fb_app_id",
+			"value": "--YOUR-APP-ID-HERE--"
+		},
+		{
+			"key": "fb_api_key",
+			"value": "--YOUR-API-KEY-HERE--"
+		},
+		{
+			"key": "ga_account",
+			"value": "--YOUR-GOOGLE-ANLAYTICS-ACCOUNT-ID-HERE--"
+		},
+		{
+			"key": "ga_domain",
+			"value": "--YOUR-GOOGLE-ANALYTICS-DOMAIN-HERE--"
+		},
+		{
+			"key": "ga_enabled",
+			"value": "true"
+		}
+	]
+}

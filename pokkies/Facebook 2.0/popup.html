@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Facebook Pokki</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	
+	<!-- CSS reset -->
+	<link rel="stylesheet" href="css/reset.css" type="text/css" />
+	<link rel="stylesheet" href="css/animations.css" type="text/css" />
+	<link rel="stylesheet" href="css/app.css" type="text/css" />
+	<link rel="stylesheet" href="css/content.css" type="text/css" />
+
+	
+	<script type="text/javascript" src="js/lib/PokkiBrowser.js"></script>
+
+	<script type="text/javascript" src="js/lib/mootools-core-1.3.1-full-compat-yc.js"></script>
+	<script type="text/javascript" src="js/lib/mootools-more-1.3.1.1.js"></script>
+	<script type="text/javascript" src="js/lib/SmoothScroll.js"></script>
+	<script type="text/javascript" src="js/lib/LazyLoad-min.js"></script>
+	<script type="text/javascript" src="js/lib/LocalStore.js"></script>
+	
+	<script type="text/javascript" src="js/lib/util.js"></script>
+	<script type="text/javascript" src="js/constants.js"></script>
+	
+	<script type="text/javascript" src="js/controller/baseController.js"></script>
+	<script type="text/javascript" src="js/controller/searchController.js"></script>
+	<script type="text/javascript" src="js/controller/baseTabController.js"></script>
+	<script type="text/javascript" src="js/controller/loginController.js"></script>
+	<script type="text/javascript" src="js/controller/newsFeedController.js"></script>
+	<script type="text/javascript" src="js/controller/friendRequestsController.js"></script>
+	<script type="text/javascript" src="js/controller/messagesController.js"></script>
+	<script type="text/javascript" src="js/controller/eventsController.js"></script>
+	<script type="text/javascript" src="js/controller/notificationsController.js"></script>
+	<script type="text/javascript" src="js/controller/permissionsController.js"></script>
+	
+	<script type="text/javascript" src="js/view/baseView.js"></script>
+	<script type="text/javascript" src="js/view/searchView.js"></script>
+	<script type="text/javascript" src="js/view/newsFeedView.js"></script>
+	<script type="text/javascript" src="js/view/friendRequestsView.js"></script>
+	<script type="text/javascript" src="js/view/messagesView.js"></script>
+	<script type="text/javascript" src="js/view/threadView.js"></script>
+	<script type="text/javascript" src="js/view/eventsView.js"></script>
+	<script type="text/javascript" src="js/view/eventView.js"></script>
+	<script type="text/javascript" src="js/view/notificationsView.js"></script>
+	<script type="text/javascript" src="js/view/quickListView.js"></script>
+	<script type="text/javascript" src="js/snippet/blingSnippet.js"></script>
+	<script type="text/javascript" src="js/snippet/commentSnippet.js"></script>
+	<script type="text/javascript" src="js/snippet/snippets.js"></script>
+	
+	<script type="text/javascript" src="js/app.js"></script>
+	
+	<script type="text/javascript" src="js/lib/ga_pokki.js"></script>
+
+</head>
+<body>
+	<div id="wrapper" class="splash">
+		
+		<div id="side">
+			<div id="side-inner">
+				<div id="search">
+					<div id="search_field-wrapper"><input id="search_field" type="text" placeholder="Search" /></div>
+					<label for="search_field">Search</label>
+				</div>
+				<nav>
+					<ul id="nav_menu">
+						<li id="nav-news_feed"><span class="icon"></span><strong>News Feed</strong></li>
+						<li id="nav-notifications"><span class="icon"></span><strong>Notifications</strong><span class="badge"></span></li>
+						<li id="nav-messages"><span class="icon"></span><strong>Messages</strong><span class="badge"></span></li>
+						<li id="nav-events"><span class="icon"></span><strong>Events</strong><span class="badge"></span></li>
+						<li id="nav-friends"><span class="icon"></span><strong>Friend Requests</strong><span class="badge"></span></li</li>
+						<!--<li id="nav-apps"><span class="icon"></span>Apps</li>-->
+					</ul>
+				</nav>
+			</div>
+			<div id="side-bg"></div>
+		</div>
+		<div class="main switch with_section_nav" id="search-main">
+			<div class="content">
+				<div id="content-search_results" class="tab_content clearfix"></div>
+			</div>
+		</div>
+		<div class="main" id="news_feed-main">
+			<div class="content">
+				<div id="content-news_feed" class="tab_content clearfix"></div>
+			</div>
+		</div>
+		<div class="main switch" id="notifications-main">
+			<div class="content">
+				<div id="content-notifications" class="tab_content clearfix"></div>
+			</div>
+		</div>
+		<div class="main switch" id="messages-main">
+			<div class="main_inner">
+			<div class="content">
+				<div id="content-messages" class="tab_content clearfix"></div>
+			</div>
+			</div>
+		</div>
+		<div class="main switch" id="events-main">
+			<div class="main_inner">		
+			<div class="content">
+				<div id="content-events" class="tab_content clearfix"></div>
+			</div>
+			</div>
+		</div>
+		<div class="main switch" id="friend_requests-main">
+			<div class="content">
+				<div id="content-friend_requests" class="tab_content clearfix"></div>
+			</div>
+		</div>
+		<!--
+		<div class="main switch" id="permissions-main">
+			<div class="content" id="permissions-content">
+				<div id="content-permissions" class="tab_content clearfix"></div>
+			</div>
+		</div>
+		-->
+		<div id="main-anchor"></div>
+		<!--
+		<div id="sub-main" class="sub-main">
+			<div class="content">
+				<div id="subcontent-thread" class="sub_content clearfix"></div>
+			</div>
+		</div>
+		-->
+		
+	
+		<div id="close_pokki"><span></span></div>
+	
+		<div id="splash">
+			<div id="splash_inner">
+				<p id="splash_title">Facebook</p>
+				<p id="splash_message"></p>
+				<p id="splash_loading"></p>
+			</div>
+		</div>
+	
+	</div>
+	
+	
+	<script type="text/template" id="newsfeed_link_template">
+		<a href="http://www.facebook.com/profile.php?id={user_id}" class="user_thumb"><img src="{user_image}" alt="{user_name}" class="user_pic" /></a>
+		<div class="nf_content {story_class}">
+			<div class="user_name"><a href="http://www.facebook.com/profile.php?id={user_id}">{user_name}</a> {to_user}</div>
+			<p class="message">{message}</p>
+			{pictures}
+			<div class="attachment {attachment_class} clearfix">
+				{picture}
+				<div class="attachment_content">
+					<a class="link_name" href="{link_href}">{link_name}</a>
+					<p class="caption">{caption}</p>
+					<p class="description">{description}</p>
+					<p class="properties">{properties}</p>
+				</div>
+			</div>
+			<p class="date">{icon} <a href="{item_url}" class="time">{time}</a>{actions}</p>
+			{comments}
+		</div>
+	</script>
+	
+	<script type="text/template" id="newsfeed_status_template">
+		<a href="http://www.facebook.com/profile.php?id={user_id}" class="user_thumb"><img src="{user_image}" alt="{user_name}" class="user_pic" /></a>
+		<div class="nf_content {story_class}">
+			<div class="user_name"><a href="http://www.facebook.com/profile.php?id={user_id}">{user_name}</a> {to_user}</div>
+			<p class="message">{message}</p>
+			{pictures}
+			{description}
+			<p class="date">{icon} <a href="{item_url}" class="time">{time}</a>{actions}</p>
+			{comments}
+		</div>
+	</script>
+	
+	<script type="text/template" id="newsfeed_photo_template">
+		<a href="http://www.facebook.com/profile.php?id={user_id}" class="user_thumb"><img src="{user_image}" alt="{user_name}" class="user_pic" /></a>
+		<div class="nf_content {story_class}">
+			<div class="user_name"><a href="http://www.facebook.com/profile.php?id={user_id}">{user_name}</a> {to_user}</div>
+			<p class="message">{message}</p>
+			{pictures}
+			<div class="attachment clearfix">
+				<a class="photo_picture" href="{photo_link}"><img src="{photo_picture}" /></a>
+				<div class="attachment_content">
+					<a class="photo_name" href="{photo_link}">{photo_name}</a>
+					<p class="caption">{caption}</p>
+					<p class="description">{description}</p>
+					{properties}
+				</div>
+			</div>
+			<p class="date">{icon} <a href="{item_url}" class="time">{time}</a>{actions}</p>
+			{comments}
+		</div>
+	</script>
+	
+	<script type="text/template" id="newsfeed_video_template">
+		<a href="http://www.facebook.com/profile.php?id={user_id}" class="user_thumb"><img src="{user_image}" alt="{user_name}" class="user_pic" /></a>
+		<div class="nf_content {story_class}">
+			<div class="user_name"><a href="http://www.facebook.com/profile.php?id={user_id}">{user_name}</a> {to_user}</div>
+			<p class="message">{message}</p>
+			{pictures}
+			<div class="attachment clearfix">
+				{video_picture}
+				<div class="attachment_content">
+					<a class="video_name" href="{video_link}">{video_name}</a>
+					<p class="caption">{caption}</p>
+					<p class="description">{description}</p>
+				</div>
+			</div>
+			<p class="date">{icon} <a href="{item_url}" class="time">{time}</a>{actions}</p>
+			{comments}
+		</div>
+	</script>
+	
+	<script type="text/template" id="newsfeed_comment_template">
+		<a href="{user_url}" class="user_thumb"><img src="{user_image}" alt="{user_name}" class="user_pic" /></a>
+		<div class="comment_content" comment_id="{id}">
+			<div class="message"><a href="{user_url}" class="user_name">{user_name}</a> {comment}</div>
+			<p class="date">{time} {actions}</p>
+		</div>
+	</script>
+	
+	<script type="text/template" id="message_template">
+		<div class="message_actions" thread_id="{id}">
+			<span class="date">{date}</span>
+			<span class="status"></span>
+		</div>
+		<span class="user_thumb"><img src="{user_image}" alt="{user_name}" /></span>
+		<span class="user_name">{user_name}</span>
+		<p class="message">{message}</p>
+	</script>
+	
+	<script type="text/template" id="thread_template">
+		<span class="date">{date}</span>
+		<a href="http://www.facebook.com/profile.php?id={user_id}" class="user_thumb"><img src="{user_image}" /></a>
+		<a href="http://www.facebook.com/profile.php?id={user_id}" class="user_name">{user_name}</a>
+		<p class="message">{message}</p>
+	</script>
+	
+	<script type="text/template" id="notifications_template">
+		<a href="http://www.facebook.com/profile.php?id={user_id}" class="user_thumb"><img src="{user_image}" /></a>
+		<div class="notification_content">
+			<div class="notif">{title_html} {body_html}</div>
+			<span class="date">{icon} {date}</span>
+		</div>
+	</script>
+
+	<script type="text/template" id="events_template">
+		<div class="events_actions" event_id="{id}">
+			<span class="status">{rsvp}</span>
+		</div>
+		<span class="user_thumb"><img src="{event_image}" alt="{event_name}" /></span>
+		<span class="event_name">{event_name}</span>
+		<p class="message">{brief}</p>
+	</script>
+	
+	<script type="text/template" id="event_template">
+		<div class="event_side">
+			<a href="http://facebook.com/events/{id}" class="event_thumb"><img class="event_image" src="{event_img}" /></a>
+			<div class="event_action dropdown_wrapper">
+				<strong class="selectButton"><span>{rsvp}</span></strong>
+				<div class="dropdown hide animate">
+					<ul class="dropdown_list">
+						<li rsvp="attending">Going</li>
+						<li rsvp="unsure">Maybe</li>
+						<li rsvp="declined">Decline</li>
+					<ul>
+				</div>
+			</div>
+			<div class="event_invitees_menu hide">
+				<ul>
+					<li rsvp="attending" class="invitees_attending hide">Going <span></span></li>
+					<li rsvp="unsure" class="invitees_unsure hide">Maybe <span></span></li>
+					<li rsvp="declined" class="invitees_declined hide">Declined <span></span></li>
+					<li rsvp="not_replied" class="invitees_not_replied hide">Not Yet Replied <span></span></li>
+				</ul>
+			</div>
+		</div>
+		<div class="event_main">
+			<div class="event_info">
+				<h3 class="event_name">{name}</h3>
+				<h4 class="event_tag">{tag}</h4>
+				<ul class="event_meta">
+					<li class="date"><span class="icon"></span>{date}</li>
+					<li class="time"><span class="icon"></span>{time}</li>
+					<li class="location">{location}</li>
+				</ul>
+			</div>
+			<div class="event_descriptions_wrapper">
+				<div class="descriptions">{desc}</div>
+				<div class="event_dscriptions_top hide"></div>
+				<div class="event_dscriptions_bottom"></div>
+			</div>
+		</div>
+	</script>
+
+	<script type="text/template" id="friendrequests_template">
+		<a href="http://www.facebook.com/profile.php?id={user_id}" class="user_thumb"><img src="{user_image}" /></a>
+		<a href="http://www.facebook.com/profile.php?id={user_id}" class="user_name">{user_name}</a>
+		<div class="actions">
+			<a href="https://www.facebook.com/friends/edit/?sk=requests" class="uiButton"><span>Respond to Friend Request</span></a>
+		</div>
+	</script>
+	
+	<script type="text/template" id="search_friends_template">
+		<span class="item_thumb"><img src="{user_image}" /></span>
+		<span class="item_name">{user_name}</span>
+	</script>
+	<script type="text/template" id="search_user_template">
+		<span class="item_thumb"><img src="{user_image}" /></span>
+		<span class="item_name">{user_name}</span>
+	</script>
+	<script type="text/template" id="search_page_template">
+		<span class="item_thumb"><img src="{page_image}" /></span>
+		<span class="item_name">{page_name}</span>
+		<span class="item_description">{page_category}</span>
+	</script>
+	<script type="text/template" id="search_group_template">
+		<span class="item_thumb"><img src="{group_image}" /></span>
+		<span class="item_name">{group_name}</span>
+	</script>		
+	<script type="text/template" id="search_place_template">
+		<span class="item_thumb"><img src="{place_image}" /></span>
+		<span class="item_name">{place_name}</span>
+		<span class="item_description">{place_category} {place_location}</span>
+	</script>
+	
+	<script type="text/template" id="quicklist_user_template">
+		<a href="{href}" class="external">
+			<span class="item_thumb"><img src="{user_image}" /></span>
+			<span class="item_name">{user_name}</span>
+		</a>
+	</script>
+	
+	
+
+
+
+	<script type="text/javascript" src="http://www.geoplugin.net/javascript.gp"></script>
+	
+	
+	<script type="text/javascript">
+		if (pokki.getScrambled('ga_enabled') === 'false') {
+			GA_ENABLED = false;
+		}
+	    if (GA_ENABLED) {
+	    	console.log('GA Info:', pokki.getScrambled('ga_account'), pokki.getScrambled('ga_domain'));
+			ga_pokki._initPlatformCustomVar();
+	    	ga_pokki._setAccount(pokki.getScrambled('ga_account'));
+	    	ga_pokki._setDomain(pokki.getScrambled('ga_domain'));
+	    }
+	</script>
+</body>
+</html>

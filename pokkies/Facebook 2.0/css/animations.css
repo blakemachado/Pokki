@@ -1,0 +1,183 @@
+
+@-webkit-keyframes 'fadeIn' {
+    0% {
+        opacity: 0;
+        -webkit-animation-timing-function: ease-in;
+    }
+    100% {
+        opacity: 1;
+        -webkit-animation-timing-function: ease-out;
+    }
+}
+
+@-webkit-keyframes 'fadeOut' {
+    0% {
+        opacity: 1;
+        -webkit-animation-timing-function: ease-in;
+    }
+    100% {
+        opacity: 0;
+        -webkit-animation-timing-function: ease-out;
+    }
+}
+
+@-webkit-keyframes 'fadeInOut' {
+    0% {
+        opacity: 0;
+        -webkit-animation-timing-function: ease-in;
+    }
+    50% {
+        opacity: 1;
+        -webkit-animation-timing-function: ease-out;
+    }
+    100% {
+        opacity: 0;
+        -webkit-animation-timing-function: ease-out;
+    }
+}
+
+@-webkit-keyframes 'status_delay' {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        -webkit-animation-timing-function: ease-out;
+    }
+}
+
+
+@-webkit-keyframes 'splash_title_out' {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+		background-image: url(../img/facebook-logo-out.png);
+	}
+	100% {
+		opacity: 1;
+		background-image: url(../img/facebook-logo-out.png);
+	}
+}
+
+
+
+/* Animates newsfeed <li> */
+@-webkit-keyframes 'li_newsfeed' {
+    /*
+    0% {
+        margin-left: -75px;
+        opacity: 0;
+        -webkit-animation-timing-function: ease-in;
+    }
+    80% {
+        margin-left: 5px;
+        opacity: 0.5;
+    }
+    100% {
+        margin-left: 15px;
+        opacity: 1;
+        -webkit-animation-timing-function: ease-out;
+    }*/
+    0% {
+        margin-left: -87px;
+        opacity: 0;
+        -webkit-animation-timing-function: ease-in;
+    }
+    80% {
+        margin-left: -3px;
+        opacity: 0.5;
+    }
+    100% {
+        margin-left: 7px;
+        opacity: 1;
+        -webkit-animation-timing-function: ease-out;
+    }
+}
+
+/* Animates messages <li> */
+@-webkit-keyframes 'li_messages' {
+    0% {
+        margin-left: -87px; /*75px;*/
+        opacity: 0;
+        -webkit-animation-timing-function: ease-in;
+    }
+    80% {
+        margin-left: -3px; /*5px;*/
+        opacity: 0.5;
+    }
+    100% {
+        margin-left: 7px;/*15px;*/
+        opacity: 1;
+        -webkit-animation-timing-function: ease-out;
+    }
+}
+
+/* Animates notifications <li> */
+@-webkit-keyframes 'li_notifications' {
+    0% {
+        margin-left: -87px; /*75px;*/
+        opacity: 0;
+        -webkit-animation-timing-function: ease-in;
+    }
+    80% {
+        margin-left: -3px; /*5px;*/
+        opacity: 0.5;
+    }
+    100% {
+        margin-left: 7px;/*15px;*/
+        opacity: 1;
+        -webkit-animation-timing-function: ease-out;
+    }
+}
+
+/* Animates friend requests <li> */
+@-webkit-keyframes 'li_friendrequests' {
+    0% {
+        margin-left: -87px;
+        opacity: 0;
+        -webkit-animation-timing-function: ease-in;
+    }
+    80% {
+        margin-left: -3px;
+        opacity: 0.5;
+    }
+    100% {
+        margin-left: 7px;
+        opacity: 1;
+        -webkit-animation-timing-function: ease-out;
+    }
+}
+
+/* Animates user thumbs */
+@-webkit-keyframes 'user_thumb' {
+    0% {
+        -webkit-transform: skew(10deg);
+        -webkit-animation-timing-function: ease-in;
+    }
+    50% {
+        -webkit-transform: skew(7deg);
+    }
+    100% {
+        -webkit-transform: skew(0deg);
+        -webkit-animation-timing-function: ease-out;
+    }
+}
+
+@-webkit-keyframes 'sub_main_switch' {
+	0% {
+		margin-left: 240px;
+	    -webkit-animation-timing-function: ease-in;
+	}
+	50% {
+		margin-left: 700px;
+	}
+	100% {
+		margin-left: 240px;
+	    -webkit-animation-timing-function: ease-out;
+	}
+}

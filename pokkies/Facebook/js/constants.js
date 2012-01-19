@@ -3,7 +3,7 @@
  * For all details and documentation:
  * https://github.com/blakemachado/Pokki
  *
- * @version     1.0
+ * @version     2.1.0
  * @license     MIT License
  * @author      Fontaine Shu <fontaine@sweetlabs.com>, SweetLabs, Inc.
  * @copyright   (c) 2011, Authors
