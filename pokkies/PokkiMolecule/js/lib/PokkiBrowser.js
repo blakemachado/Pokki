@@ -3,7 +3,7 @@
  * For all details and documentation:
  * https://github.com/blakemachado/Pokki
  *
- * @version     1.3, last updated: 11/15/2011
+ * @version     1.4, last updated: 1/24/2012
  * @license     MIT License
  * @author      Fontaine Shu <fontaine@sweetlabs.com>, SweetLabs, Inc.
  * @copyright   (c) 2011, Authors
@@ -269,6 +269,10 @@ catch(e) {
 		 * NOOP
 		 */
 		setIdleDetect: function(on) { },
+		/**
+		 * Always returns false
+		 */
+		getIdleDetect: function(page_name) { return false; },
 		
 		/**
 		 * Returns inner size
@@ -279,7 +283,33 @@ catch(e) {
                 height: window.innerHeight
             };
             return size;		  
-		}
+		},
+		/**
+		 * Returns a static orientation, modify according to your display
+		 */
+		getOrientation: function() {
+            return 'bottom'; // modify according to your setup
+		},
+		
+		getPlatformVersion: function() {
+            return 'chrome';
+		},
+        
+        getManifestVersion: function() {
+            var mf = pokki.getManifestData();
+			if(mf) {
+				return mf.version;
+			}
+			return '';
+        },
+        
+        getInstallSource: function() {
+            return '';
+        },
+        
+        getInstallCampaign: function() {
+            return '';
+        }
 	};
 	
 	/**
