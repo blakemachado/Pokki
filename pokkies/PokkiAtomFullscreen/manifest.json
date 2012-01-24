@@ -1,0 +1,20 @@
+{
+    "name": "Pokki Atom Fullscreen",
+    "version": "1.0",
+    "icon-19x19": "img/icon-19x19.png",
+    "icon-29x29": "img/icon-29x29.png",
+    "icon-42x42": "img/icon-42x42.png",
+    "description": "A basic foundation from which to build a Pokki.",
+    "popup": "popup.html",
+    "background_page": "background.html",
+    "scrambled_data": [
+        {
+            "key": "ga_account_id",
+            "value": "--ACCOUNT-ID--"
+        },
+        {
+            "key": "ga_domain",
+            "value": "--ACCOUNT-DOMAIN--
+        }
+    ]
+}

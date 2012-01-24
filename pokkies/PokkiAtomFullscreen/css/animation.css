@@ -1,0 +1,61 @@
+/* Fade in animation */
+@-webkit-keyframes fadein {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+		-webkit-animation-timing-function: ease-in;
+	}
+}
+
+/* Stagger in animation */
+@-webkit-keyframes staggerdelay {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@-webkit-keyframes stagger {
+    0% {
+        opacity: 0;
+        -webkit-animation-timing-function: ease-in;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Splash screen animations */
+@-webkit-keyframes splash {
+	0% {
+		opacity: 0;
+        -webkit-animation-timing-function: ease-in;
+	}
+	45% {
+        opacity: 1;
+        -webkit-animation-timing-function: ease-in;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+@-webkit-keyframes atom {
+	0% {
+		opacity: 0;
+		-webkit-animation-timing-function: ease-in;
+	}
+	45% {
+        opacity: 1;
+        -webkit-transform: rotate3D(1,2,1,360deg);
+	}
+	70% {
+        opacity: 1;	
+		-webkit-animation-timing-function: ease-out;
+	}
+	100% {
+		opacity: 0;
+	}
+}
