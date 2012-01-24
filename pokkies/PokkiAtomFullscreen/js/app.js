@@ -1,7 +1,5 @@
 var App = function() {
-    var unloaded = new LocalStore('unloaded'),
-        splash_ran = unloaded.get() ? true : false,
-        enterfullscreen_bubble,
+    var enterfullscreen_bubble,
         exitfullscreen_bubble,
         exitreminder_bubble,
         upgrade_bubble,
@@ -48,7 +46,7 @@ var App = function() {
         exitreminder_bubble = Bubbles.createNew('exitfullscreen2', {
             pinnedTo: '#fullscreen-exit', 
             contentHTML: '<strong>Click <span class="ic fsexit"><span></span></span> to exit full screen!</strong>',
-            autoHide: 4000,
+            autoHide: 3000,
             onShow: function() {
                 controls_left.classList.remove('_fsexitenabled');
             },
@@ -62,6 +60,9 @@ var App = function() {
         controls_left.style.display = 'none';
         upgrade_bubble = Bubbles.createNew('needupgrade', {
             contentHTML: '<strong>Your platform doesn\'t support fullscreen :(</strong><p>Please upgrade to use fullscreen.</p>',
+            onHide: function() {
+                shown_fullscreen_bubble = true;
+            }
         });
     }
 
@@ -105,60 +106,17 @@ var App = function() {
     
     // Kick off what needs to be done when the popup is shown
     this.onPopupShown = function() {
-        // splash elements
-        var splash = document.getElementById('splash');
-        var atom = document.getElementById('atom');
         var wrapper = document.getElementById('wrapper');
         
-        // animate splash on first run
-        if(!splash_ran) {
-            splash.classList.add('animate');
-            atom.classList.add('animate');
-            wrapper.classList.remove('show');
-            
-            // allows the css animation to run for some time before removing the animation class
-            setTimeout(function() {
-                splash.classList.remove('animate');
-                atom.classList.remove('animate');
-                wrapper.classList.add('show');
-                controls_left.classList.add('_fsenabled');
-                controls_right.style.opacity = 1;
-                
-                // stagger content animation
-                var p = wrapper.getElementsByTagName('p');
-                for(var i = 0; i < p.length; i++) {
-                    p[i].style['-webkit-animation-delay'] = (100 * i + 330) + 'ms';
-                }
-                
-                // display bubble tooltip
-                if(enterfullscreen_bubble)
-                    setTimeout(function() { enterfullscreen_bubble.show(); }, 1000);
-                if(upgrade_bubble)
-                    setTimeout(function() { upgrade_bubble.show(); }, 1000);
-            }, 2200);
-            
-            splash_ran = true;
-        }
-        else if(unloaded.get()) {
-            splash.classList.remove('animate');
-            atom.classList.remove('animate');
-            wrapper.classList.add('show');
-            controls_left.classList.add('_fsenabled');
-            controls_right.style.opacity = 1;
-                
-            // stagger content animation
-            var p = wrapper.getElementsByTagName('p');
-            for(var i = 0; i < p.length; i++) {
-                p[i].style['-webkit-animation-delay'] = (100 * i + 330) + 'ms';
-            }
-                
-            // display bubble tooltip
-            if(enterfullscreen_bubble)
-                setTimeout(function() { enterfullscreen_bubble.show(); }, 1000);
-            if(upgrade_bubble)
-                setTimeout(function() { upgrade_bubble.show(); }, 1000);
-        }
-        unloaded.remove();
+        wrapper.classList.add('show');
+        controls_left.classList.add('_fsenabled');
+        controls_right.style.opacity = 1;
+        
+        // display bubble tooltip
+        if(!shown_fullscreen_bubble && enterfullscreen_bubble)
+            setTimeout(function() { enterfullscreen_bubble.show(); }, 1200);
+        if(!shown_fullscreen_bubble && upgrade_bubble)
+            setTimeout(function() { upgrade_bubble.show(); }, 1200);
     };
     
     
@@ -170,6 +128,6 @@ var App = function() {
     
     // Use this to store anything needed to restore state when the user opens the Pokki again
     this.onPopupUnload = function() {
-        unloaded.set(true);
+        
     };
 };
