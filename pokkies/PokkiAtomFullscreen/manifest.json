@@ -14,7 +14,7 @@
         },
         {
             "key": "ga_domain",
-            "value": "--ACCOUNT-DOMAIN--
+            "value": "--ACCOUNT-DOMAIN--"
         }
     ]
 }
