@@ -53,7 +53,7 @@ var App = function() {
             },
             onHide: function() {
                 clearTimeout(exitfullscreenTimer);
-                exitfullscreenTimerr = setTimeout(function() { controls_left.classList.add('_fsexitenabled') }, 200);
+                exitfullscreenTimer = setTimeout(function() { controls_left.classList.add('_fsexitenabled') }, 200);
             }
         });
     }
