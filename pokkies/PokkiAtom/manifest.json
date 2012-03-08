@@ -4,6 +4,7 @@
    "icon-19x19": "img/icon-19x19.png",
    "icon-29x29": "img/icon-29x29.png",
    "icon-42x42": "img/icon-42x42.png",
+   "icon-256x256": "img/icon-256x256.png",
    "description": "A basic foundation from which to build a Pokki.",
    "popup": "popup.html",
    "background_page": "background.html"
