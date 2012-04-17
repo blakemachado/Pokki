@@ -8,13 +8,13 @@
  * @author      Fontaine Shu <fontaine@sweetlabs.com>, SweetLabs, Inc.
  * @copyright   (c) 2011, Authors
  *
- * Usage: Include in popup.html and background.html and that's it!
+ * Usage: Include in window.html and background.html and that's it!
  * It's JavaScript framework independent
  */
  
 try {
 	// simply a test to see if pokki exists
-	if(pokki.isPopupShown()) {
+	if(pokki.isShown()) {
 		// noop
 	}
 }
@@ -33,19 +33,15 @@ catch(e) {
 		/**
 		 * NOOP
 		 */
-		openPopup: function() {},
+		show: function() {},
 		/**
 		 * NOOP
 		 */
-		closePopup: function() {},
+		hide: function() {},
 		/**
-		 * NOOP
+		 * Always returns true since the open browser window is the window
 		 */
-		setPopupClientSize: function(width, height) {},
-		/**
-		 * Always returns true since the open browser window is the popup
-		 */
-		isPopupShown: function() { return true; },
+		isShown: function() { return true; },
 		/**
 		 * Launches new browser window
 		 */
@@ -73,7 +69,7 @@ catch(e) {
 				this.badge.style.boxShadow = '1px 1px 3px #333';
 				this.badge.style['-webkit-transition'] = 'all 250ms ease-in';
 				
-				if(pokki.is_popup)
+				if(pokki.is_window)
 					document.body.appendChild(this.badge);
 				else
 					parent.document.body.appendChild(this.badge);
@@ -93,12 +89,12 @@ catch(e) {
 		 * passes the message along to the main window
 		 */
 		rpc: function(method) {
-			if(pokki.is_popup) {
+			if(pokki.is_window) {
 				// talk to background
 				eval('pokki.backgroundWin.contentWindow.window.' + method);
 			}
 			else {
-				// talk to popup
+				// talk to window
 				eval('parent.' + method);
 			}
 		},
@@ -117,7 +113,7 @@ catch(e) {
             return pokki.rpc(rpc_str); 
         },
 		/**
-		 * Launches a popup window as the websheet, does not support
+		 * Launches a window as the websheet, does not support
 		 * error_callback
 		 */
 		showWebSheet: function(url, width, height, loading_callback, error_callback) {
@@ -147,7 +143,7 @@ catch(e) {
 			// unsupported
 		},
 		/**
-		 * Closes the popup window
+		 * Closes the window
 		 */
 		hideWebSheet: function() {
 			if(this.window) {
@@ -157,7 +153,7 @@ catch(e) {
 			}
 		},
 		/**
-		 * Resizes the popup window
+		 * Resizes the window
 		 */
 		setWebSheetSize: function(width, height) {
 			if(this.window) {
@@ -222,7 +218,7 @@ catch(e) {
 				this.context_menu.style.boxShadow = 'rgba(0,0,0,0.4) 0px 1px 2px';
 				this.context_menu.style['-webkit-transition'] = 'all 250ms ease-in';
 				
-				if(pokki.is_popup) {
+				if(pokki.is_window) {
 					document.body.appendChild(this.context_menu);
 				}
 				else {
@@ -243,7 +239,7 @@ catch(e) {
 				    }
 				}
 				
-				if(!pokki.is_popup) {
+				if(!pokki.is_window) {
 					if(parent.pokki.events && parent.pokki.events.context_menu) {
 						for(var ps = 0; ps < parent.pokki.events.context_menu.length; ps++) {
                             parent.pokki.events.context_menu[ps](id);
@@ -266,15 +262,6 @@ catch(e) {
 		},
 		
 		/**
-		 * NOOP
-		 */
-		setIdleDetect: function(on) { },
-		/**
-		 * Always returns false
-		 */
-		getIdleDetect: function(page_name) { return false; },
-		
-		/**
 		 * Returns inner size
 		 */
 		getWorkAreaSize: function() {
@@ -284,15 +271,9 @@ catch(e) {
             };
             return size;		  
 		},
-		/**
-		 * Returns a static orientation, modify according to your display
-		 */
-		getOrientation: function() {
-            return 'bottom'; // modify according to your setup
-		},
 		
 		getPlatformVersion: function() {
-            return '0.246';
+            return '0.250';
 		},
         
         getManifestVersion: function() {
@@ -317,9 +298,9 @@ catch(e) {
 	 */
 	
 	// Whether or not this is the background.html page or not
-	pokki.is_popup = location.href.search('background.html') > 0 ? false : true;
+	pokki.is_window = location.href.search('background.html') > 0 ? false : true;
 	
-	if(pokki.is_popup) {
+	if(pokki.is_window) {
 		// create a hidden iframe on the page to mimic the background.html
 		// functionality so they can communicate with each other
 		pokki.backgroundWin = document.createElement('iframe');
@@ -333,17 +314,17 @@ catch(e) {
 		
 		pokki.backgroundWin.addEventListener('load', function() {
 			// we do this to ensure that the background page loads before anything
-			// needs to be executed on popup_showing() or popup_shown()
+			// needs to be executed on showing or shown
 			if(pokki.events) {
-				if(pokki.events.popup_showing) {
-				    for(var ps = 0; ps < pokki.events.popup_showing.length; ps++) {
-                        pokki.events.popup_showing[ps]();
+				if(pokki.events.showing) {
+				    for(var ps = 0; ps < pokki.events.showing.length; ps++) {
+                        pokki.events.showing[ps]();
 				    }
 				}
-				if(pokki.events.popup_shown) {
+				if(pokki.events.shown) {
 					setTimeout(function() {
-    				    for(var ps = 0; ps < pokki.events.popup_shown.length; ps++) {
-                            pokki.events.popup_shown[ps]();
+    				    for(var ps = 0; ps < pokki.events.shown.length; ps++) {
+                            pokki.events.shown[ps]();
     				    }
 				    }, 1000);
 				}

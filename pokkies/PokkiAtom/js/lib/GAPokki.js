@@ -14,7 +14,7 @@
  *   include this line above the _setAccount and _setDomain:
  *   ga_pokki._initPlatformCustomVar(--SLOT_NUMBER_DEFAULTS_TO_1--);
  * 
- * - Place these two lines with your values at the bottom of popup.html
+ * - Place these two lines with your values at the bottom of window.html
  *   ga_pokki._setAccount('--GA-ACCOUNT-ID--');
  *   ga_pokki._setDomain('--YOUR-DOMAIN--');
  *
@@ -136,12 +136,12 @@
                 l_session._set(c_session);
             }
             
-            // event to reset session when popup closes
-            pokki.addEventListener('popup_hidden', function() {
+            // event to reset session when window closes
+            pokki.addEventListener('hidden', function() {
                 // user has specified both required parameters...
                 if(utmac && utmhn) {
-                    that._trackPageview('/popup_hidden');
-                    that._trackEvent('User', 'PopupHidden');
+                    that._trackPageview('/hidden');
+                    that._trackEvent('User', 'AppHidden');
                 }
                 
                 if(IS_DEBUG) console.log('resetting session');
@@ -151,8 +151,8 @@
                 utmhid = get_random();
             });
             
-            // event to start session when popup opens
-            pokki.addEventListener('popup_showing', function() {
+            // event to start session when window opens
+            pokki.addEventListener('showing', function() {
                 // don't run the first time
                 if(initialized) {
                     c_session = (new Date()).getTime();
@@ -166,7 +166,7 @@
             });
             
             // event to log an icon click and first run
-            pokki.addEventListener('popup_shown', function() {
+            pokki.addEventListener('shown', function() {
                 // user has specified both required parameters...
                 if(utmac && utmhn) {
                     // track first run

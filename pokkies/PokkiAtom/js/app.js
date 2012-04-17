@@ -2,22 +2,18 @@ var App = function() {
     var unloaded = new LocalStore('unloaded');
     var splash_ran = unloaded.get() ? true : false;
 
-    // attach click event to minimize button
-    var minimize = document.getElementById('minimize');
-    minimize.addEventListener('click', pokki.closePopup);
-    
     // Initialize whatever else needs to be initialized
     
     
     
         
-    // Kick off what needs to be done whenever the popup is about to be shown
-    this.onPopupShowing = function() {    
+    // Kick off what needs to be done whenever the app is about to be shown
+    this.onShowing = function() {    
     
     };
     
-    // Kick off what needs to be done when the popup is shown
-    this.onPopupShown = function() {
+    // Kick off what needs to be done when the app is shown
+    this.onShown = function() {
         // splash elements
         var splash = document.getElementById('splash');
         var atom = document.getElementById('atom');
@@ -53,13 +49,13 @@ var App = function() {
         unloaded.remove();
     };
     
-    // Kick off what needs to be done when the popup is hidden
-    this.onPopupHidden = function() {
+    // Kick off what needs to be done when the app is hidden
+    this.onHidden = function() {
     
     };
     
-    // Use this to store anything needed to restore state when the user opens the Pokki again
-    this.onPopupUnload = function() {
+    // Use this to store anything needed to restore state when the user opens the app again
+    this.onUnload = function() {
         unloaded.set(true);
     };
 };
