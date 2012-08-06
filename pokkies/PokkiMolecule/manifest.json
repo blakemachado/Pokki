@@ -8,7 +8,7 @@
         "256": "img/icon-256x256.png"
    },
    "description": "An example Pokki",
-   "window": "popup.html",
+   "window": "window.html",
    "background": "background.html",
    "scrambled_data": [
       {
