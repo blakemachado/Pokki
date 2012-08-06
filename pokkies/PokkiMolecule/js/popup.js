@@ -3,7 +3,7 @@ var Molecule = false;
 // Add listener for when the page is unloaded
 // You have 4 seconds from hearing this event to 
 // the pop-up page being disposed
-pokki.addEventListener('popup_unload', onUnload);
+pokki.addEventListener('unload', onUnload);
 
 function onUnload() {
     console.log('Pop-up page is being unloaded.');
@@ -28,7 +28,7 @@ function onLoad() {
 }
 
 // Add listener for when the pop-up window is showing
-pokki.addEventListener('popup_showing', onShowing);
+pokki.addEventListener('showing', onShowing);
 
 function onShowing() {
     console.log('Pop-up window is almost visible.');
@@ -37,7 +37,7 @@ function onShowing() {
 }
 
 // Add listener for when the pop-up window is shown
-pokki.addEventListener('popup_shown', onShow);
+pokki.addEventListener('shown', onShow);
 
 function onShow() {
     console.log('Pop-up window is visible.');
@@ -46,7 +46,7 @@ function onShow() {
 }
 
 // Add listener for when the pop-up window is hidden
-pokki.addEventListener('popup_hidden', onHide);
+pokki.addEventListener('hidden', onHide);
 
 function onHide() {
     console.log('Pop-up window was closed.');
@@ -56,5 +56,5 @@ function onHide() {
 
 // RPC calls
 function update_feed() {
-    if(Molecule && !pokki.isPopupShown()) Molecule.reload_feed();
+    if(Molecule && !pokki.isShown()) Molecule.reload_feed();
 }

@@ -10,7 +10,6 @@
  */
 var App = function() {    
     var that        = this; // Bind this to that for proper reference to the this object within closures
-    var minimize    = document.getElementById('minimize');
     var wrapper     = document.getElementById('wrapper');
     var drop_target = document.getElementById('target');
     var feed_list   = document.getElementById('feed');
@@ -116,7 +115,7 @@ var App = function() {
                 // tell pokki to open it in a normal browser
                 pokki.openURLInDefaultBrowser(url);
                 // close the popup so user can interact with browser
-                pokki.closePopup();
+                pokki.hide();
                 
                 return false;
             }
@@ -133,7 +132,7 @@ var App = function() {
                 // tell pokki to open it in a normal browser
                 pokki.openURLInDefaultBrowser(url);
                 // close the popup so user can interact with browser
-                pokki.closePopup();
+                pokki.hide();
             }
             else if(el.classList.contains('ui-link')) {
                 // follow link in default browser
@@ -141,7 +140,7 @@ var App = function() {
                 // tell pokki to open it in a normal browser
                 pokki.openURLInDefaultBrowser(url);
                 // close the popup so user can interact with browser
-                pokki.closePopup();
+                pokki.hide();
             }
             else if(el.classList.contains('ui-login')) {
                 api.handle_login();
@@ -164,9 +163,6 @@ var App = function() {
     //////////////////////////////////////////////////////////////////////
     ///// ATTACH EVENTS
     //////////////////////////////////////////////////////////////////////
-    
-    // attach click event to minimize button
-    minimize.addEventListener('click', pokki.closePopup);
     
     // initialize event delegation for <a> clicks
     wrapper.addEventListener('click', delegateEvent);

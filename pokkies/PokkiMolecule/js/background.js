@@ -78,7 +78,7 @@ function onContextMenu(key) {
             // tell pokki to open it in a normal browser
             pokki.openURLInDefaultBrowser('http://www.instapaper.com/u');
             // close the popup so user can interact with browser
-            pokki.closePopup();
+            pokki.hide();
             break;
         case 'logout':
             if(MoleculeBackground) MoleculeBackground.logout();
