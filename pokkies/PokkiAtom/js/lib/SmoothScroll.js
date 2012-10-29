@@ -1,4 +1,4 @@
-// SmoothScroll v0.9.9
+// SmoothScroll v0.9.9_pokki
 // Licensed under the terms of the MIT license.
 
 // People involved
@@ -68,7 +68,7 @@ function ssc_init() {
              html.offsetHeight <= windowHeight)) {
         ssc_root.style.height = "auto";
         if (ssc_root.offsetHeight <= windowHeight) {
-            var underlay = document.createElement("div"); 	
+            var underlay = document.createElement("div");   
             underlay.style.clear = "both";
             body.appendChild(underlay);
         }
@@ -102,6 +102,7 @@ function ssc_scrollArray(elem, left, top, delay) {
     
     // push a scroll command
     ssc_que.push({
+        elem: elem,
         x: left, 
         y: top, 
         lastX: (left < 0) ? 0.99 : -0.99,
@@ -154,8 +155,8 @@ function ssc_scrollArray(elem, left, top, delay) {
 
         // scroll left
         if (left) {
-            var lastLeft = elem.scrollLeft;
-            elem.scrollLeft += scrollX;
+            var lastLeft = item.elem.scrollLeft;
+            item.elem.scrollLeft += scrollX;
             
             // scroll left failed (edge)
             if (scrollX && elem.scrollLeft === lastLeft) {
@@ -165,11 +166,11 @@ function ssc_scrollArray(elem, left, top, delay) {
 
         // scroll top
         if (top) {
-            var lastTop = elem.scrollTop;
-            elem.scrollTop += scrollY;
+            var lastTop = item.elem.scrollTop;
+            item.elem.scrollTop += scrollY;
             
             // scroll top failed (edge)
-            if (scrollY && elem.scrollTop === lastTop) {
+            if (scrollY && item.elem.scrollTop === lastTop) {
                 top = 0;
             }            
         }
@@ -203,7 +204,7 @@ function ssc_scrollArray(elem, left, top, delay) {
 function ssc_wheel(event) {
 
     if (!ssc_initdone) {
-        init();
+        ssc_init();
     }
     
     var target = event.target;

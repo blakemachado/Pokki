@@ -3,29 +3,24 @@
 
 /* If a pop-up has no content, then it's width and height must be specified */
 body {
-    overflow: hidden;
     font: normal 12px Helvetica, Arial, sans-serif;
     text-shadow: 0 -1px 0 #fff;
-    background-color: rgb(4,5,5);
     /* use this to keep all text from being selectable to maintain a more app-like experience
     otherwise it's possible to highlight/select an entire pokki window  */
     -webkit-user-select: none;
+}
+
+a, a:hover, a:visited {
+    text-decoration: none;
 }
 
 /* Used to contain the contents of a Pokki when testing in a web browser using PokkiBrowser.js */
 #wrapper {
     margin: auto;
     width: 500px;
-    height: 300px;
     position: relative;
     opacity: 0;
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0, rgb(240,240,240)),
-        color-stop(1, rgb(251,250,255))
-    );
+    background: #fff;
 }
 #wrapper.show { 
     opacity: 1; 
@@ -38,26 +33,6 @@ body {
         -webkit-animation-name: staggerdelay, stagger;
         -webkit-animation-iteration-count: 1;
     }
-
-/* Minimize Pokki button */
-a#minimize {
-    display: block;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    width: 21px;
-    height: 12px;
-    cursor: pointer;
-    background: #555 url(../img/minimize.png) 0px -2px no-repeat;
-    border-bottom-left-radius: 3px;
-    -webkit-transition: background-color 0.3s linear;
-}
-a#minimize:hover {
-    background-color: #383d43;
-}
-a#minimize:active {
-    background-position: 0px -1px;
-}
 
 /* Splash Screen */
 #splash {
